@@ -1,0 +1,25 @@
+version: '3'
+services:
+  java:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # .envファイルからbuild-argsへ変数を渡す
+      args:
+        - USERNAME=${USERNAME}
+        - GROUPNAME=${GROUPNAME}
+        - UID=${UID}
+        - GID=${GID}
+        - PASSWORD=${PASSWORD}
+    container_name: java_container
+    working_dir: /home/${USERNAME}
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: ./src
+        target: /home/${USERNAME}
+    tty: true
+    stdin_open: true
+
+
